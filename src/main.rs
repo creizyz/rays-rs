@@ -1,10 +1,12 @@
+mod vec3d;
+
 use std::fs::File;
 use std::io::prelude::*;
 
 fn main() -> std::io::Result<()> {
 
-    let image_width : isize = 256;
-    let image_height : isize = 256;
+    let image_width : isize = 400;
+    let image_height : isize = 300;
 
     let mut file : File = File::create("./image.ppm")?;
 
@@ -13,6 +15,8 @@ fn main() -> std::io::Result<()> {
     write!(file, "255\n")?;
 
     for j in 0..image_height {
+        println!("scanlines remaining: {}.", image_height - j);
+
         for i in 0..image_width {
             let r : f64 = i as f64 / (image_width - 1) as f64;
             let g : f64 = j as f64 / (image_height - 1) as f64;
@@ -25,6 +29,8 @@ fn main() -> std::io::Result<()> {
             write!(file, "{} {} {}\n", ir, ig, ib)?;
         }
     }
+
+    println!("done.");
 
     Ok(())
 }
